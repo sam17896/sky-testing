@@ -1,8 +1,7 @@
-import { Text } from 'components';
-import { Box } from 'components';
+import { Text, Box } from 'components';
 import * as React from 'react';
 
-const Profile = () => {
+const Verification = () => {
     return (
         <Box>
             <Text>Hello</Text>
@@ -11,4 +10,4 @@ const Profile = () => {
 
 }
 
-export default Profile;
+export default Verification;

@@ -1,11 +1,15 @@
 import * as React from "react";
-import { SafeAreaView, TouchableOpacity } from "react-native";
+import { Image, SafeAreaView, TouchableOpacity } from "react-native";
 import { useTheme } from "@shopify/restyle";
 
 import { Icon, Text, Box } from "../components";
 
-const Icons = ["home"];
-const Texts = ["Home"];
+const Icons = [
+  require("@assets/home.png"),
+  require("@assets/verification.png"),
+  require("@assets/instructions.png"),
+  require("@assets/profile.png")
+];
 
 const BOTTOM_TABS_REMOVE_SCREENS = [];
 
@@ -14,7 +18,7 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
   const { iconPrimary, black } = theme.colors;
   const focusedOptions = descriptors[state?.routes[state?.index]?.key]?.options;
   // Removing notifcaition from bottom routes
-  const bottomTabRoutes = state?.routes.slice(0, -1);
+  const bottomTabRoutes = state?.routes;
   console.log({ bottomTabRoutes });
   const rootScreen = state?.routes[state?.index]?.state;
   if (
@@ -30,17 +34,15 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
     <SafeAreaView
       style={{
         overflow: "hidden",
-        shadowOpacity: 0.5,
         position: "absolute",
         flexDirection: "row",
-        elevation: theme.spacing.xxs,
         bottom: theme.spacing.xs * -1,
-        backgroundColor: "transparent",
+        elevation: theme.spacing.xxs,
+        shadowOpacity: 0.5,
+        backgroundColor: theme.colors.blue,
         shadowRadius: theme.spacing.xxs,
         shadowColor: theme.colors.shadow,
-        borderTopLeftRadius: theme.spacing.l,
         shadowOffset: { width: 2, height: 2 },
-        borderTopRightRadius: theme.spacing.l,
       }}>
       {bottomTabRoutes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
@@ -77,20 +79,14 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
               width={"120%"}
               borderRadius={12}
               alignItems="center">
-              <Icon
-                name={Icons[index]}
-                size={isFocused ? 20 : 24}
-                color={isFocused ? black : iconPrimary}
+              <Image
+                source={Icons[index]}
+                style={{ width: 24, height: 24 }}
+
+              // name={Icons[index]}
+              // size={isFocused ? 20 : 24}
+              // color={isFocused ? black : iconPrimary}
               />
-              {isFocused ? (
-                <Text
-                  numberOfLines={1}
-                  textAlign="center"
-                  variant={"xxsmallPrimary"}
-                  style={{ marginTop: theme.spacing.xxs }}>
-                  {Texts[index]}
-                </Text>
-              ) : null}
             </Box>
           </TouchableOpacity>
         );

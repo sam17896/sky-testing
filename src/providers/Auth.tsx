@@ -1,29 +1,14 @@
 import * as React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from 'moment';
 
-type User = {
-    _id: string;
-    avatarUrl: string;
-    firstName: string;
-    lastName: string;
-    contactEmail: string;
-    contactPhone: string;
-    country: string;
-};
-
-type SomeUserLoginDetails = { token: string; user: User; loginId: string };
+type SomeUserLoginDetails = { token: string; userId: string; isFaulted: boolean, isEnabled: boolean, sessionExpiration: Date };
 const DefaultUserLoginDetails: SomeUserLoginDetails = {
     token: "",
-    user: {
-        _id: "",
-        avatarUrl: "",
-        firstName: "",
-        lastName: "",
-        contactEmail: "",
-        contactPhone: "",
-        country: "",
-    },
-    loginId: "",
+    userId: "",
+    isEnabled: false,
+    isFaulted: false,
+    sessionExpiration: null
 };
 export interface AuthContextType {
     isLoggedIn: boolean;
@@ -52,10 +37,15 @@ const AuthProvider: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
             try {
                 let userData = await AsyncStorage.getItem("@smart_user");
                 if (userData !== null) {
-                    userData = JSON.parse(userData);
-                    // @ts-ignore
-                    setLoggedUser(userData);
-                    setLogged(true);
+                    const jsonData = JSON.parse(userData);
+                    if (jsonData.sessionExpiration && moment(jsonData.sessionExpiration).isAfter(moment())) {
+                        // @ts-ignore
+                        setLoggedUser(jsonData);
+                        setLogged(true);
+                    } else {
+                        setLogged(false);
+                    }
+
                 } else {
                     setLogged(false);
                 }

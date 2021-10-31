@@ -6,7 +6,6 @@ const Tab = createBottomTabNavigator();
 
 const ApplicationStackNavigator: React.FC = () => {
     return (
-
         <Tab.Navigator
             tabBar={(props) => <BottomTabs {...props} />}>
             <Tab.Screen name="home" component={HomeStack} />

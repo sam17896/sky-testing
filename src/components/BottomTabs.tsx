@@ -1,24 +1,13 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { SafeAreaView, TouchableOpacity } from "react-native";
 import { useTheme } from "@shopify/restyle";
 
 import { Icon, Text, Box } from "../components";
 
-const Icons = ["home", "search", "new-request", "chat", "menu"];
-const Texts = ["Home", "Search", "New Request", "Message", "Menu"];
+const Icons = ["home"];
+const Texts = ["Home"];
 
-const BOTTOM_TABS_REMOVE_SCREENS = [
-  "travel-request",
-  "order-request",
-  "request-for-order",
-  "my-travel-plans",
-  "my-order-requests",
-  "pending-reviews",
-  "my-approved-requests",
-  "settings",
-  "about",
-  "suggestion",
-];
+const BOTTOM_TABS_REMOVE_SCREENS = [];
 
 const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
   const theme = useTheme();
@@ -26,7 +15,7 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state?.routes[state?.index]?.key]?.options;
   // Removing notifcaition from bottom routes
   const bottomTabRoutes = state?.routes.slice(0, -1);
-
+  console.log({ bottomTabRoutes });
   const rootScreen = state?.routes[state?.index]?.state;
   if (
     focusedOptions?.tabBarVisible === false ||

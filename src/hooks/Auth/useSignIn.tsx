@@ -62,6 +62,7 @@ const useSignIn = (): [
                 method: "POST",
                 body: { email, password },
             });
+            console.log({ res });
             if (res) {
                 const obj = {
                     token: res.token,

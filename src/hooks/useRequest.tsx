@@ -29,6 +29,7 @@ const useRequest = () => {
             noStringyfy = false,
         ) => {
             const options = Object.assign({}, DEFAULTS, params);
+            console.log({ options, url: `${CONFIG.server}${endpoint}` })
             return (
                 fetch(`${CONFIG.server}${endpoint}`, {
                     ...options,
@@ -94,6 +95,7 @@ const useRequest = () => {
                     })
                     // This happens when we are offline
                     .catch((e) => {
+                        console.log({ err });
                         console.log("useReq Offline: ", JSON.stringify(e));
                     })
             );

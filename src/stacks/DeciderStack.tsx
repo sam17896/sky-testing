@@ -15,7 +15,7 @@ const DeciderStackScreen: React.FC = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 1000);
   }, []);
 
   return (

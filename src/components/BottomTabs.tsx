@@ -33,10 +33,7 @@ const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
   return (
     <SafeAreaView
       style={{
-        overflow: "hidden",
-        position: "absolute",
         flexDirection: "row",
-        bottom: theme.spacing.xs * -1,
         elevation: theme.spacing.xxs,
         shadowOpacity: 0.5,
         backgroundColor: theme.colors.blue,

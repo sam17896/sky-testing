@@ -33,7 +33,7 @@ const Instruction = () => {
                     </Box>
                     <Box flex={1}>
                     </Box>
-                    <Box padding="m" flex={2}>
+                    <Box padding="s" flex={2}>
                         <Swiper
                             showsPagination={true}
                             showsButtons={true}
@@ -64,20 +64,20 @@ const Instruction = () => {
                                 }}>
                                     <Icon name="arrow-left" color={'white'} size={14} />
                                 </Box>}>
-                            <Box justifyContent="center" flex={1} alignItems="center" paddingHorizontal="xl">
+                            <Box justifyContent="center" flex={1} alignItems="center" paddingHorizontal="xxl">
                                 <Text variant="mediumPrimaryBold">THE PREPARATION STAGE</Text>
                                 <Text variant="xsmallPrimary" textAlign="justify">
                                     Before you begin ensure that you are in a well-lit, disturbance-free room.
                                     Next, carefully lay out all the testing equipment, and wash your hands to avoid contamination.
                                 </Text>
                             </Box>
-                            <Box justifyContent="center" flex={1} alignItems="center" paddingHorizontal="xl">
+                            <Box justifyContent="center" flex={1} alignItems="center" paddingHorizontal="xxl">
                                 <Text variant="mediumPrimaryBold">TAKING THE TEST</Text>
                                 <Text variant="xsmallPrimary" textAlign="justify">
                                     In order for us to issue a certificate, it is mandatory to record youself taking the test. Prepare your phone so that you can record youself taking the test.
                                 </Text>
                             </Box>
-                            <Box justifyContent="center" flex={1} alignItems="center" paddingHorizontal="xl">
+                            <Box justifyContent="center" flex={1} alignItems="center" paddingHorizontal="xxl">
                                 <Text variant="mediumPrimaryBold">Just swab, roll, squeeze, then read!</Text>
                                 <Text variant="xsmallPrimary" textAlign="justify">
                                     When you are ready, using your smartphone device, please start the video of youself taking the test.

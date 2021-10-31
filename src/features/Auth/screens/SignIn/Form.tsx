@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Box, Text, useAppTheme } from 'components';
 import TextInput from '@components/TextInput';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Linking, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Linking, Platform, TouchableOpacity } from 'react-native';
 
 const Form = ({ email, setEmail, password, setPassword }: {
     email: string,
@@ -12,7 +11,10 @@ const Form = ({ email, setEmail, password, setPassword }: {
 }) => {
     const theme = useAppTheme();
     return (
-        <ScrollView style={{ flex: 3 }} contentContainerStyle={{ flexGrow: 1 }}>
+        <KeyboardAvoidingView
+            style={{ flex: 3 }}
+            behavior={Platform.OS === "ios" ? "padding" : null}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 20}>
             <Box height={50} justifyContent="center" alignItems="center" marginTop={'m'}>
                 <Text variant="mediumPrimaryBold">Sign In</Text>
             </Box>
@@ -25,7 +27,8 @@ const Form = ({ email, setEmail, password, setPassword }: {
                     <Text variant="smallPrimaryBold">Forgot password?</Text>
                 </TouchableOpacity>
             </Box>
-        </ScrollView>
+        </KeyboardAvoidingView>
+
     );
 };
 

@@ -8,7 +8,7 @@ const Action = ({ Login, loading }: {
     loading: boolean,
 }) => {
     return (
-        <Box flex={1} marginHorizontal="m">
+        <Box flex={1} marginHorizontal="m" marginVertical="m">
             <Button {...{ btnText: "SIGN IN", loading, onPress: () => Login() }} />
             <Box flex={1} flexDirection="row" justifyContent="space-between" margin="s">
                 <TouchableOpacity>

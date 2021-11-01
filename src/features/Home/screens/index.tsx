@@ -3,12 +3,13 @@ import { Box, Icon, Text, useAppTheme } from "components";
 import LayoutWithLogo from '@components/LayoutWithLogo';
 import { Dimensions, FlatList, Image, TouchableOpacity } from 'react-native';
 import LayoutBorder from '@components/LayoutBorder';
+import { useNavigation } from '@react-navigation/core';
 const { height } = Dimensions.get('screen');
 const actions = [
     {
         image: require('@assets/order.png'),
         label: 'Orders',
-        route: ''
+        route: 'order'
     },
     {
         image: require('@assets/results.png'),
@@ -27,6 +28,7 @@ const actions = [
 ]
 const Home = () => {
     const theme = useAppTheme();
+    const { navigate } = useNavigation();
     return (
         <LayoutWithLogo>
             <LayoutBorder>
@@ -60,7 +62,13 @@ const Home = () => {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             borderRadius: 15
-                                        }}>
+                                        }}
+                                            onPress={() => {
+                                                if (item.route) {
+                                                    navigate(item.route);
+                                                }
+                                            }}
+                                        >
                                             <Icon name="arrow-right" color={'white'} size={18} />
                                         </TouchableOpacity>
                                     </Box>

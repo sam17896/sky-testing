@@ -62,6 +62,7 @@ const useSignIn = (): [
                 method: "POST",
                 body: { email, password },
             });
+
             console.log({ res });
             if (res) {
                 const obj = {
@@ -77,6 +78,10 @@ const useSignIn = (): [
             }
         } catch (err) {
             setLoading(false);
+            Snackbar.show({
+                text: JSON.stringify(err),
+                duration: Snackbar.LENGTH_LONG,
+            });
             console.log({ err });
         }
     };

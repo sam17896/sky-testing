@@ -23,7 +23,7 @@ const actions = [
     {
         image: require('@assets/kit.png'),
         label: 'Purchase Testing Kit',
-        route: ''
+        route: 'take-test'
     }
 ]
 const Home = () => {

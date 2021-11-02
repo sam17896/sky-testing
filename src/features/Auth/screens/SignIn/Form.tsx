@@ -20,7 +20,7 @@ const Form = ({ email, setEmail, password, setPassword }: {
             </Box>
             <Box flex={3}>
                 <TextInput {...{ label: 'Email Address', placeholder: 'Enter username', value: email, onChangeText: (e) => setEmail(e) }} />
-                <TextInput {...{ label: 'Password', placeholder: 'Enter password', value: password, onChangeText: (e) => setPassword(e) }} />
+                <TextInput {...{ label: 'Password', placeholder: 'Enter password', secureTextEntry: true, value: password, onChangeText: (e) => setPassword(e) }} />
                 <TouchableOpacity
                     onPress={() => Linking.openURL('https://skywaytesting.com/my-account/lost-password/')}
                     style={{ alignItems: 'flex-end', marginHorizontal: theme.spacing.m }}>

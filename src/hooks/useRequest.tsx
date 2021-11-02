@@ -95,7 +95,7 @@ const useRequest = () => {
                     })
                     // This happens when we are offline
                     .catch((e) => {
-                        console.log({ err });
+                        console.log({ e });
                         console.log("useReq Offline: ", JSON.stringify(e));
                     })
             );

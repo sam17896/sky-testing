@@ -29,7 +29,7 @@ const useRequest = () => {
             noStringyfy = false,
         ) => {
             const options = Object.assign({}, DEFAULTS, params);
-            console.log({ options, url: `${CONFIG.server}${endpoint}` })
+            console.log({ options, url: `${CONFIG.server}${endpoint}` });
             return (
                 fetch(`${CONFIG.server}${endpoint}`, {
                     ...options,

@@ -15,16 +15,16 @@ const useStyles = makeStyles((theme) =>
         },
     }),
 );
-const Title = () => {
+const Title = ({ title }) => {
     const styles = useStyles();
     return (
         <Box
-            flex={1}
-            backgroundColor="white" paddingHorizontal="m"
-            paddingVertical="s"
-            borderRadius={10}
-            style={styles.shadow}>
-            <Text variant="largePrimaryBold">Past Orders</Text>
+            style={styles.shadow}
+            backgroundColor="white"
+            padding="m"
+            borderRadius={3}
+            justifyContent="center">
+            <Text variant="largePrimaryBold">{title}</Text>
         </Box>
     )
 }

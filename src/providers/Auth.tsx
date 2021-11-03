@@ -2,10 +2,14 @@ import * as React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moment from 'moment';
 
-type SomeUserLoginDetails = { token: string; userId: string; isFaulted: boolean, isEnabled: boolean, sessionExpiration: Date };
+type SomeUserLoginDetails = {
+    token: string; userId: string; email: string,
+    isFaulted: boolean, isEnabled: boolean, sessionExpiration: Date
+};
 const DefaultUserLoginDetails: SomeUserLoginDetails = {
     token: "",
     userId: "",
+    email: "",
     isEnabled: false,
     isFaulted: false,
     sessionExpiration: null

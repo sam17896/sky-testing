@@ -68,6 +68,7 @@ const useSignIn = (): [
                 const obj = {
                     token: res.token,
                     "userId": res.userId,
+                    email,
                     "isFaulted": res.isFaulted,
                     "isEnabled": res.isEnabled,
                     "sessionExpiration": res.sessionExpiration,

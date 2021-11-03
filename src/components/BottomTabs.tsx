@@ -11,7 +11,7 @@ const Icons = [
   require("@assets/profile.png")
 ];
 
-const BOTTOM_TABS_REMOVE_SCREENS = [];
+const BOTTOM_TABS_REMOVE_SCREENS = ['upload-passport'];
 
 const BottomTabs: React.FC<any> = ({ state, descriptors, navigation }) => {
   const theme = useTheme();

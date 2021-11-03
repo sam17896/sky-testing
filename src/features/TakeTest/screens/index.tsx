@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) =>
 const TakeTest = () => {
     const styles = useStyles();
     const theme = useAppTheme();
-    const camera = React.useRef();
     const [response, setResponse] = React.useState<any>(null);
 
     const onButtonPress = React.useCallback((type, options) => {
@@ -46,10 +45,15 @@ const TakeTest = () => {
                     borderBottomRightRadius={10}
                     borderBottomLeftRadius={10}>
                     <Box flex={1} margin="m" justifyContent="center">
-                        <Text variant="mediumPrimary"> Please take a photo of picture paper from your passport</Text>
+                        <Text
+                            variant="smallPrimary"
+                            textAlign="justify">
+                            Please take a photo of picture paper from your passport
+                        </Text>
                     </Box>
                     <Box flex={2}>
                         <Image style={{ flex: 1 }} source={require('@assets/passport.png')} />
+                        <Text>{JSON.stringify(response)}</Text>
                     </Box>
                     <Box flex={1} justifyContent="flex-end" marginVertical="m">
                         <Box justifyContent="center" alignItems="center" marginVertical="s">
@@ -57,7 +61,15 @@ const TakeTest = () => {
                             <Text variant="smallPrimary">Capture</Text>
                         </Box>
                         <Box marginHorizontal="m">
-                            <Button {...{ btnText: "Submit", onPress: () => { } }} />
+                            <Button {...{
+                                btnText: "Submit", onPress: () => {
+                                    onButtonPress('capture', {
+                                        saveToPhotos: true,
+                                        mediaType: 'photo',
+                                        includeBase64: false,
+                                    });
+                                }
+                            }} />
                         </Box>
                     </Box>
                 </Box>

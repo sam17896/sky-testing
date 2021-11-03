@@ -4,6 +4,7 @@ import LayoutWithLogo from '@components/LayoutWithLogo';
 import LayoutBorder from '@components/LayoutBorder';
 import { Image, StyleSheet } from 'react-native';
 import Button from '@components/Button';
+import { useNavigation } from '@react-navigation/core';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -63,6 +64,7 @@ const steps = [
 ];
 const Steps = () => {
     const styles = useStyles();
+    const { navigate } = useNavigation();
     const [index, setIndex] = React.useState(0);
     return (
         <LayoutWithLogo>
@@ -104,6 +106,11 @@ const Steps = () => {
                             {index !== (steps.length - 1) &&
                                 <Box flex={1} paddingHorizontal="s">
                                     <Button {...{ btnText: "Next Step", onPress: () => { setIndex(prev => prev + 1); } }} />
+                                </Box>
+                            }
+                            {index === (steps.length - 1) &&
+                                <Box flex={1} paddingHorizontal="s">
+                                    <Button {...{ btnText: "Upload Documents", onPress: () => { navigate('upload-document'); } }} />
                                 </Box>
                             }
                         </Box>

@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/core';
 import { Icon, Text, useAppTheme } from 'components';
 import { Box, makeStyles } from 'components';
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Video from 'react-native-video';
 
-
+const { width, height } = Dimensions.get('window');
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -40,7 +40,7 @@ const Instruction = () => {
     const theme = useAppTheme();
     const styles = useStyles();
     const ref = React.useRef();
-    const { navigate } = useNavigation();
+    const { navigate, goBack } = useNavigation();
     return (
         <LayoutWithLogo>
             <LayoutBorder>
@@ -54,17 +54,21 @@ const Instruction = () => {
                         style={styles.shadow}
                         backgroundColor="white"
                         padding="m"
+                        flexDirection="row"
                         borderRadius={3}
-                        justifyContent="center">
+                        alignItems="center">
+                        <Icon name="arrow-left" style={{ paddingHorizontal: theme.spacing.s }} size={18} color={theme.colors.blue} onPress={() => { goBack() }} />
                         <Text variant="largePrimaryBold">How to Use Your Kit</Text>
                     </Box>
-                    <Box flex={1}>
+                    <Box flex={1} >
                         <Video
-                            source={{ uri: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4" }}   // Can be a URL or a local file.
+                            source={{ uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4" }}   // Can be a URL or a local file.
                             ref={ref}
-                            style={{ flex: 1 }}                                   // Store reference
                             onBuffer={() => { }}                // Callback when remote video is buffering
-                            onError={(e) => { console.log(e) }} />
+                            style={{
+                                flex: 1,
+                            }}                                   // Store reference
+                            onError={(e) => { console.log({ e }); }} />
                     </Box>
                     <Box padding="s" flex={2}>
                         <Swiper

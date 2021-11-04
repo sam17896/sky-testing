@@ -59,7 +59,7 @@ const OrderList = ({ orders, loading }) => {
                         </Box>
                         <Box flex={1} alignItems="flex-end" justifyContent="center">
                             <TouchableOpacity style={styles.button} onPress={() => {
-                                navigate('passenger-info');
+                                navigate('passenger-list', { orderId: item?.orderId, orderLineId: item?.orderLineId });
                             }}>
                                 <Text variant="xxsmallWhiteRegular">View</Text>
                             </TouchableOpacity>

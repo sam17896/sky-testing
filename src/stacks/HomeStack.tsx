@@ -7,6 +7,7 @@ import TakeTest from "@features/TakeTest/screens";
 import PassengerInfo from "@features/TakeTest/screens/passengerInfo";
 import UploadDocument from "@features/TakeTest/screens/uploadDocuments";
 import UploadPassport from "@features/TakeTest/screens/uploadPassport";
+import PassengerList from "@features/TakeTest/screens/passengerList";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="passenger-info" component={PassengerInfo} />
       <Stack.Screen name="upload-document" component={UploadDocument} />
       <Stack.Screen name="upload-passport" component={UploadPassport} />
+      <Stack.Screen name="passenger-list" component={PassengerList} />
     </Stack.Navigator>
   );
 };

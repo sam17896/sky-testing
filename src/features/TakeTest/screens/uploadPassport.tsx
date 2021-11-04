@@ -5,6 +5,7 @@ import { Box, Icon, makeStyles, Text, useAppTheme } from 'components';
 import { Image, StyleSheet } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Button from '@components/Button';
+import { RNCamera } from 'react-native-camera';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -26,7 +27,7 @@ const UploadPassport = () => {
     const styles = useStyles();
     const theme = useAppTheme();
     const [response, setResponse] = React.useState<any>(null);
-
+    const cameraRef = React.useRef();
     const onButtonPress = React.useCallback(async (type, options) => {
         if (type === 'capture') {
             if (await requestCameraPermission()) {
@@ -60,12 +61,12 @@ const UploadPassport = () => {
     };
     return (
         <Box flex={1}>
-            <Image
-                style={{
-                    position: 'absolute',
-                    flex: 1
-                }}
-                source={require("@assets/testing-tube.png")} />
+            <Box position="absolute" flex={1}>
+                <RNCamera
+                    style={{ flex: 1, alignItems: 'center' }}
+                    ref={cameraRef}
+                />
+            </Box>
             <Box flex={4}>
                 {/* <Image style={{ flex: 1 }} source={require("@assets/testing-tube.png")} /> */}
             </Box>

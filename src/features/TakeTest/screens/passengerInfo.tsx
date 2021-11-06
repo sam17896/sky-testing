@@ -45,7 +45,6 @@ const PassengerInfo = () => {
             <LayoutBorder>
                 <Box flex={1} borderRadius={10} margin="m">
                     <Title {...{ title: 'Submit Passenger Info' }} />
-                    {console.log({ item })}
                     <KeyboardAvoidingView
                         style={{
                             flex: 1,

@@ -15,7 +15,7 @@ const Form = ({ email, setEmail, password, setPassword }: {
             style={{ flex: 3 }}
             behavior={Platform.OS === "ios" ? "padding" : null}
             keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 20}>
-            <Box height={50} justifyContent="center" alignItems="center" marginTop={'m'}>
+            <Box height={30} justifyContent="center" alignItems="center" marginTop={'m'}>
                 <Text variant="mediumPrimaryBold">Sign In</Text>
             </Box>
             <Box flex={3}>

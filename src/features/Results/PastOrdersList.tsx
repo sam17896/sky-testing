@@ -2,17 +2,17 @@ import { Box } from 'components';
 import LayoutBorder from '@components/LayoutBorder';
 import LayoutWithLogo from '@components/LayoutWithLogo';
 import * as React from 'react';
-import LiveOrders from './LiveOrders';
 import useOrder from '@hooks/Order/useOrder';
+import PastOrders from './PastOrders';
 
 
-const Order = () => {
-    const [liveOrders, _, loading] = useOrder();
+const PastOrderList = () => {
+    const [_, pastOrders, loading] = useOrder();
     return (
         <LayoutWithLogo>
             <LayoutBorder>
                 <Box flex={1} marginVertical="l">
-                    <LiveOrders {...{ orders: liveOrders, loading }} />
+                    <PastOrders {...{ orders: pastOrders, loading }} />
                     <Box flex={0.5} />
                 </Box>
             </LayoutBorder>
@@ -20,4 +20,4 @@ const Order = () => {
     );
 };
 
-export default Order;
+export default PastOrderList;

@@ -1,6 +1,8 @@
+import { Box } from '@components/';
 import LayoutBorder from '@components/LayoutBorder';
 import LayoutWithLogo from '@components/LayoutWithLogo';
 import Loader from '@components/Loader';
+import Title from '@components/Title';
 import usePassengerInfo from '@hooks/TakeTest/usePassengerInfo';
 import { useRoute } from '@react-navigation/core';
 import * as React from 'react';
@@ -30,20 +32,23 @@ const PassengerList = () => {
     return (
         <LayoutWithLogo>
             <LayoutBorder>
-                {loading && <Loader />}
-                {!loading && <FlatList
-                    style={{ flex: 1 }}
-                    keyExtractor={(item, index) => index.toString()}
-                    data={passengers}
-                    renderItem={({ item }) => {
-                        return (
-                            <PassengerItem {...{ item }} />
-                        );
-                    }}
-                />}
+                <Box flex={1} borderRadius={10} margin="m">
+                    <Title {...{ title: 'Passenger List' }} />
+                    {loading && <Loader />}
+                    {!loading && <FlatList
+                        style={{ flex: 1 }}
+                        keyExtractor={(item, index) => index.toString()}
+                        data={passengers}
+                        renderItem={({ item }) => {
+                            return (
+                                <PassengerItem {...{ item }} />
+                            );
+                        }}
+                    />}
+                </Box>
             </LayoutBorder>
         </LayoutWithLogo>
-    )
-}
+    );
+};
 
 export default PassengerList;

@@ -9,7 +9,12 @@ const Action = ({ Login, loading }: {
 }) => {
     return (
         <Box flex={1} marginHorizontal="m" marginVertical="m">
-            <Button {...{ btnText: "SIGN IN", loading, onPress: () => Login() }} />
+            <Box marginVertical="xxs">
+                <Button {...{ btnText: "SIGN IN", loading, onPress: () => Login() }} />
+            </Box>
+            <Box marginVertical="xxs">
+                <Button {...{ btnText: "PURCHASE TESTING KIT", onPress: () => { } }} />
+            </Box>
             <Box flex={1} flexDirection="row" justifyContent="space-between" margin="s">
                 <TouchableOpacity>
                     <Text variant="smallPrimaryBold">Privacy Policy</Text>

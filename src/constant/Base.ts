@@ -16,6 +16,7 @@ const palette = {
   grey9: "#C7CACD",
   lightBlue: "#F2F7FB",
   skyBlue: "#1FC2CE",
+  lightPurple: "#6B19D3",
   golden: "#F99125",
   blue: '#2E1C45',
   red: "#FF0000",

@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) =>
     }),
 );
 
-const UploadPassport = () => {
+const UploadVideo = () => {
     const styles = useStyles();
     const theme = useAppTheme();
-    const [imageURI, setImageUri] = React.useState("");
+    const [uri, setUri] = React.useState("");
     const [response, setResponse] = React.useState<any>(null);
     const cameraRef = React.useRef();
     const { goBack } = useNavigation();
@@ -71,15 +71,18 @@ const UploadPassport = () => {
         if (cameraRef && cameraRef.current) {
             // @ts-ignore
             const { uri: pictureURI } = await cameraRef.current.takePictureAsync();
-            setImageUri(pictureURI);
-            const base64 = await getBase64(pictureURI);
+            setUri(pictureURI);
+            const base64 = await getBase64(uri);
             console.log('base64: ', base64);
         }
     };
     return (
         <Box flex={1}>
             <Box flex={4}>
-                {!imageURI && <RNCamera style={{ flex: 1, alignItems: 'center' }} ref={cameraRef} />}
+                {!uri && <RNCamera
+                    style={{ flex: 1, alignItems: 'center' }}
+                    ref={cameraRef}
+                />}
             </Box>
             <Box
                 flex={1}
@@ -105,11 +108,13 @@ const UploadPassport = () => {
                     </TouchableOpacity>
                 </Box>
                 <Box marginHorizontal="m">
-                    <Button {...{ btnText: "Submit", onPress: () => { } }} />
+                    <Button {...{
+                        btnText: "Submit", onPress: () => { }
+                    }} />
                 </Box>
             </Box>
         </Box>
     );
 };
 
-export default UploadPassport;
+export default UploadVideo;

@@ -13,11 +13,11 @@ const actions = [
     {
         image: require('@assets/upload-test-result.png'),
         label: 'Upload Test Result',
-        route: ''
+        route: 'upload-testing-kit'
     }, {
         image: require('@assets/upload-video.png'),
         label: 'Upload Video',
-        route: ''
+        route: 'upload-video'
     }
 ];
 

@@ -20,11 +20,11 @@ const Title = ({ title }) => {
     return (
         <Box
             style={styles.shadow}
-            backgroundColor="white"
+            backgroundColor="lightPurple"
             padding="m"
-            borderRadius={3}
+            borderRadius={10}
             justifyContent="center">
-            <Text variant="largePrimaryBold">{title}</Text>
+            <Text variant="largeWhiteBold">{title}</Text>
         </Box>
     )
 }

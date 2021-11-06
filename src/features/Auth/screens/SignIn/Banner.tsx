@@ -4,7 +4,7 @@ import { Image } from 'react-native';
 
 const Banner = () => {
     return (
-        <Box flex={1} alignItems="center" justifyContent="center" margin="l">
+        <Box flex={1} alignItems="center" justifyContent="center" margin="m">
             <Image source={require('@assets/sign-in-banner.png')} />
         </Box>
     );

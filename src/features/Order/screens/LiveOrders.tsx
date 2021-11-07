@@ -7,7 +7,7 @@ const LiveOrders = ({ orders, loading }) => {
     const { navigate } = useNavigation();
     return (
         <Box flex={2} margin="m" borderRadius={3}>
-            <Title {...{ title: 'Live Orders' }} />
+            <Title {...{ title: 'Live Orders', icon: 'order' }} />
             <OrderList {...{
                 orders, loading, onPress: (item) => {
                     navigate('passenger-list', { orderId: item?.orderId, orderLineId: item?.orderLineId });

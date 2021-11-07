@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { PermissionsAndroid, TouchableOpacity } from 'react-native';
 import { Box, Icon, makeStyles, Text, useAppTheme } from 'components';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Button from '@components/Button';
 import { RNCamera } from 'react-native-camera';
-import { useNavigation } from '@react-navigation/core';
 import RNFS from 'react-native-fs';
+import Video from 'react-native-video';
+
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -27,17 +28,23 @@ const useStyles = makeStyles((theme) =>
 const UploadVideo = () => {
     const styles = useStyles();
     const theme = useAppTheme();
-    const [uri, setUri] = React.useState("");
-    const [response, setResponse] = React.useState<any>(null);
+    const [uri, setUri] = React.useState(null);
+    const [record, setRecord] = React.useState(false);
     const cameraRef = React.useRef();
-    const { goBack } = useNavigation();
+    const ref = React.useRef();
     const onButtonPress = React.useCallback(async (type, options) => {
         if (type === 'capture') {
             if (await requestCameraPermission()) {
-                launchCamera(options, setResponse);
+                launchCamera(options, (res) => {
+
+                });
             }
         } else {
-            launchImageLibrary(options, setResponse);
+            launchImageLibrary(options, (res) => {
+                if (res && res.assets && res.assets.length > 0) {
+                    setUri(res?.assets[0]?.uri);
+                }
+            });
         }
     }, []);
 
@@ -67,13 +74,26 @@ const UploadVideo = () => {
         const imageUriBase64 = await RNFS.readFile(filepath, 'base64');
         return `data:image/jpeg;base64,${imageUriBase64}`;
     };
-    const takePicture = async () => {
+    const startRecording = async () => {
+        // default to mp4 for android as codec is not set
+        if (cameraRef && cameraRef.current) {
+            setRecord(true);
+            try {
+                // @ts-ignore
+                const { uri: VideoUri } = await cameraRef?.current.recordAsync();
+                const base64 = await getBase64(VideoUri);
+                setUri(VideoUri);
+                console.log({ base64 });
+            } catch (e) {
+                console.log({ e });
+            }
+        }
+    }
+    const stopRecording = () => {
         if (cameraRef && cameraRef.current) {
             // @ts-ignore
-            const { uri: pictureURI } = await cameraRef.current.takePictureAsync();
-            setUri(pictureURI);
-            const base64 = await getBase64(uri);
-            console.log('base64: ', base64);
+            cameraRef?.current.stopRecording();
+            setRecord(false);
         }
     };
     return (
@@ -83,6 +103,16 @@ const UploadVideo = () => {
                     style={{ flex: 1, alignItems: 'center' }}
                     ref={cameraRef}
                 />}
+                {uri && <Box flex={1} >
+                    <Video
+                        source={{ uri }}   // Can be a URL or a local file.
+                        ref={ref}
+                        onBuffer={() => { }}                // Callback when remote video is buffering
+                        style={{
+                            flex: 1,
+                        }}                                   // Store reference
+                        onError={(e) => { console.log({ e }); }} />
+                </Box>}
             </Box>
             <Box
                 flex={1}
@@ -91,15 +121,21 @@ const UploadVideo = () => {
                 backgroundColor="white">
                 <Box flexDirection="row" justifyContent="space-around">
                     <TouchableOpacity style={styles.button} onPress={() => {
-                        takePicture();
+                        if (!record && !uri) {
+                            startRecording();
+                        } else if (record && !uri) {
+                            stopRecording();
+                        } else {
+                            setUri(null);
+                        }
                     }}>
                         <Icon name="camera" color={theme.colors.blue} size={22} />
-                        <Text variant="smallPrimary">Capture</Text>
+                        <Text variant="smallPrimary">{uri ? 'Record Another' : record ? 'Stop Recording' : 'Start Recording'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => {
                         onButtonPress('upload', {
                             saveToPhotos: true,
-                            mediaType: 'photo',
+                            mediaType: 'video',
                             includeBase64: false,
                         });
                     }}>

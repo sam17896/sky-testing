@@ -1,8 +1,8 @@
-import { Text } from 'components';
+import { Text, useAppTheme } from 'components';
 import { Box } from 'components';
 import { makeStyles } from '@components/makeStyles';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -15,8 +15,27 @@ const useStyles = makeStyles((theme) =>
         },
     }),
 );
-const Title = ({ title }) => {
+const Title = ({ title, icon }) => {
     const styles = useStyles();
+    const theme = useAppTheme();
+    const [iconUri, setIconUri] = React.useState();
+    React.useEffect(() => {
+        switch (icon) {
+            case 'result':
+                setIconUri(require('@assets/result-icon.png'));
+                break;
+            case 'order':
+                setIconUri(require('@assets/order-icon.png'));
+                break;
+            case 'passenger':
+                setIconUri(require('@assets/icon-passenger-info.png'));
+                break;
+            default:
+                setIconUri(null);
+                break;
+        }
+    }, [icon]);
+
     return (
         <Box
             style={styles.shadow}
@@ -24,7 +43,11 @@ const Title = ({ title }) => {
             padding="m"
             borderRadius={10}
             justifyContent="center">
-            <Text variant="largeWhiteBold">{title}</Text>
+            <Box flexDirection={'row'} alignItems="center">
+                {iconUri && <Image source={iconUri} style={{ width: 20, height: 20, marginHorizontal: theme.spacing.xs }} />}
+                <Text variant="largeWhiteBold">{title}</Text>
+
+            </Box>
         </Box>
     )
 }

@@ -33,7 +33,7 @@ const PassengerList = () => {
         <LayoutWithLogo>
             <LayoutBorder>
                 <Box flex={1} borderRadius={10} margin="m">
-                    <Title {...{ title: 'Passenger List' }} />
+                    <Title {...{ title: `Order: ${params?.orderId}`, icon: 'order' }} />
                     {loading && <Loader />}
                     {!loading && <FlatList
                         style={{ flex: 1 }}

@@ -5,7 +5,6 @@ import { Image, StyleSheet } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Button from '@components/Button';
 import { RNCamera } from 'react-native-camera';
-import { useNavigation } from '@react-navigation/core';
 import RNFS from 'react-native-fs';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
@@ -27,17 +26,21 @@ const useStyles = makeStyles((theme) =>
 const UploadPassport = () => {
     const styles = useStyles();
     const theme = useAppTheme();
-    const [imageURI, setImageUri] = React.useState("");
-    const [response, setResponse] = React.useState<any>(null);
+    const [imageURI, setImageUri] = React.useState(null);
     const cameraRef = React.useRef();
-    const { goBack } = useNavigation();
     const onButtonPress = React.useCallback(async (type, options) => {
         if (type === 'capture') {
             if (await requestCameraPermission()) {
-                launchCamera(options, setResponse);
+                launchCamera(options, (res) => {
+
+                });
             }
         } else {
-            launchImageLibrary(options, setResponse);
+            launchImageLibrary(options, (res) => {
+                if (res && res.assets && res.assets.length > 0) {
+                    setImageUri(res?.assets[0]?.uri);
+                }
+            });
         }
     }, []);
 
@@ -80,6 +83,9 @@ const UploadPassport = () => {
         <Box flex={1}>
             <Box flex={4}>
                 {!imageURI && <RNCamera style={{ flex: 1, alignItems: 'center' }} ref={cameraRef} />}
+                {imageURI && imageURI !== "" && <Box flex={1}>
+                    <Image style={{ flex: 1 }} source={{ uri: imageURI }} />
+                </Box>}
             </Box>
             <Box
                 flex={1}
@@ -88,10 +94,14 @@ const UploadPassport = () => {
                 backgroundColor="white">
                 <Box flexDirection="row" justifyContent="space-around">
                     <TouchableOpacity style={styles.button} onPress={() => {
-                        takePicture();
+                        if (imageURI) {
+                            setImageUri(null);
+                        } else {
+                            takePicture();
+                        }
                     }}>
                         <Icon name="camera" color={theme.colors.blue} size={22} />
-                        <Text variant="smallPrimary">Capture</Text>
+                        <Text variant="smallPrimary">{imageURI ? 'Take Another' : 'Capture'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => {
                         onButtonPress('upload', {

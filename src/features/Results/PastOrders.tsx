@@ -7,7 +7,7 @@ const PastOrders = ({ orders, loading }) => {
     const { navigate } = useNavigation();
     return (
         <Box flex={2} marginHorizontal="m" borderRadius={10}>
-            <Title {...{ title: 'Past Orders' }} />
+            <Title {...{ title: 'Past Orders', icon: 'order' }} />
             <OrderList {...{
                 orders, loading, onPress: (item) => {
                     navigate('result', { orderId: item?.orderId, orderLineId: item?.orderLineId });

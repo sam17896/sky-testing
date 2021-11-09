@@ -26,14 +26,14 @@ const Results = () => {
                         padding="s"
                     >
                         {loading && <Loader />}
-                        <Box height={40} flexDirection={'row'} justifyContent="space-around">
+                        {!loading && <Box height={40} flexDirection={'row'} justifyContent="space-around">
                             <Text variant="smallBlackRegular">First Name</Text>
                             <Text variant="smallBlackRegular">Surname</Text>
                             <Text variant="smallBlackRegular">Passport</Text>
                             <Text variant="smallBlackRegular">Ceritficate</Text>
-                        </Box>
+                        </Box>}
 
-                        <FlatList
+                        {!loading && <FlatList
                             data={passengers}
                             contentContainerStyle={{ flexGrow: 1 }}
                             style={{ flex: 1 }}
@@ -63,7 +63,7 @@ const Results = () => {
                                     </Box>
                                 );
                             }}
-                        />
+                        />}
 
                     </Box>
                 </Box>

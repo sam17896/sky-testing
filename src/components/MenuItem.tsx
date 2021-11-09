@@ -6,6 +6,8 @@ import { Box, Icon, makeStyles, Text } from '.';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         container: {
+            flex: 1,
+            borderRadius: 5,
             margin: theme.spacing.l,
             backgroundColor: theme.colors.white,
             elevation: theme.spacing.xxs,
@@ -28,8 +30,13 @@ const MenuItem = ({ item, onPress }) => {
     const { navigate } = useNavigation();
     const styles = useStyles();
     return (
-        <Box flex={1} borderRadius={3}
+        <TouchableOpacity
             style={styles.container}
+            onPress={() => {
+                if (item.route) {
+                    onPress ? onPress(item.route) : navigate(item.route);
+                }
+            }}
         >
             <Box flex={1} flexDirection="row" justifyContent="space-between" paddingHorizontal="m" marginVertical="m">
                 <Box flexDirection={'row'} flex={3}>
@@ -37,19 +44,13 @@ const MenuItem = ({ item, onPress }) => {
                     <Text paddingHorizontal="s" variant="smallPrimary" style={{ alignSelf: 'center' }}>{item.label}</Text>
                 </Box>
                 <Box flex={1} alignItems="flex-end" justifyContent="center">
-                    <TouchableOpacity style={styles.button}
-                        onPress={() => {
-                            if (item.route) {
-                                onPress ? onPress(item.route) : navigate(item.route);
-                            }
-                        }}
-                    >
+                    <Box style={styles.button} >
                         <Icon name="arrow-right" color={'white'} size={18} />
-                    </TouchableOpacity>
+                    </Box>
                 </Box>
             </Box>
-        </Box>
-    )
-}
+        </TouchableOpacity>
+    );
+};
 
 export default MenuItem;

@@ -4,7 +4,7 @@ import { Box } from '.';
 
 const Logo = () => {
     return (
-        <Box paddingHorizontal={'m'} paddingVertical="s">
+        <Box paddingHorizontal={'m'} paddingVertical="l">
             <Image source={require('../assets/logo.png')} />
         </Box>
     )

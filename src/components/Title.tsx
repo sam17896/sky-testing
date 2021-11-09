@@ -1,8 +1,9 @@
-import { Text, useAppTheme } from 'components';
+import { Icon, Text, useAppTheme } from 'components';
 import { Box } from 'components';
 import { makeStyles } from '@components/makeStyles';
 import * as React from 'react';
 import { Image, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) =>
 const Title = ({ title, icon }) => {
     const styles = useStyles();
     const theme = useAppTheme();
+    const { goBack } = useNavigation();
     const [iconUri, setIconUri] = React.useState();
     React.useEffect(() => {
         switch (icon) {
@@ -44,7 +46,10 @@ const Title = ({ title, icon }) => {
             borderRadius={10}
             justifyContent="center">
             <Box flexDirection={'row'} alignItems="center">
-                {iconUri && <Image source={iconUri} style={{ width: 20, height: 20, marginHorizontal: theme.spacing.xs }} />}
+                <Icon name="arrow-left" color={'white'} size={20} onPress={() => {
+                    goBack();
+                }} style={{ marginHorizontal: theme.spacing.xs }} />
+                {iconUri && <Image source={iconUri} resizeMode="contain" style={{ width: 20, height: 20, marginHorizontal: theme.spacing.xs }} />}
                 <Text variant="largeWhiteBold">{title}</Text>
             </Box>
         </Box>

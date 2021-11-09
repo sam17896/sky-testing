@@ -1,6 +1,7 @@
 import LayoutBorder from '@components/LayoutBorder';
 import LayoutWithLogo from '@components/LayoutWithLogo';
 import MenuItem from '@components/MenuItem';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import * as React from 'react';
 import { FlatList } from 'react-native';
 
@@ -22,6 +23,8 @@ const actions = [
 ];
 
 const UploadDocument = () => {
+    const { params: { passenger } } = useRoute();
+    const { navigate } = useNavigation();
     return (
         <LayoutWithLogo>
             <LayoutBorder>
@@ -31,7 +34,11 @@ const UploadDocument = () => {
                     data={actions}
                     renderItem={({ item }) => {
                         return (
-                            <MenuItem {...{ item }} />
+                            <MenuItem {...{
+                                item, onPress: (route) => {
+                                    navigate(route, { passenger });
+                                }
+                            }} />
                         );
                     }}
                 />

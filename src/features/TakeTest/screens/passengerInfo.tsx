@@ -1,32 +1,44 @@
-import { Box, Text, useAppTheme } from 'components';
+import { Box, makeStyles, Text, useAppTheme } from 'components';
 import LayoutBorder from '@components/LayoutBorder';
 import LayoutWithLogo from '@components/LayoutWithLogo';
 import * as React from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet } from 'react-native';
 import Title from '@components/Title';
 import Button from '@components/Button';
 import TextInput from '@components/TextInput';
 import { useNavigation, useRoute } from '@react-navigation/core';
-import useGetPassengerInfo from '@hooks/TakeTest/useGetPassengerInfo';
+import useRequest from '@hooks/useRequest';
+import Endpoints from '@constant/Endpoint';
+import useAuth from '@hooks/useAuth';
+import DatePicker from 'react-native-datepicker'
+import moment from 'moment';
+
+const useStyles = makeStyles((theme) => {
+    return StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: theme.colors.backgroundGrey,
+            borderBottomRightRadius: 10,
+            borderBottomLeftRadius: 10
+        }
+    });
+})
+
 
 const PassengerInfo = () => {
     const { navigate } = useNavigation();
-    const theme = useAppTheme();
+    const { user } = useAuth();
     const { params: { item } } = useRoute();
-    const [passengerItem, setPassengerItem] = React.useState({
-        firstName: "",
-        lastName: "",
-        passportNumber: ""
-    });
+    const [passengerItem, setPassengerItem] = React.useState<any>();
+    const styles = useStyles();
+    const request = useRequest();
+    const theme = useAppTheme();
+    const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         if (item) {
             console.log({ item });
-            setPassengerItem({
-                firstName: item?.firstName,
-                lastName: item?.lastName,
-                passportNumber: item?.passportNumber
-            });
+            setPassengerItem({ ...item });
         }
     }, [item]);
 
@@ -40,18 +52,35 @@ const PassengerInfo = () => {
         });
     };
 
+    const Submit = () => {
+        setLoading(true);
+        request(Endpoints.UpdatePassengerInfo, {
+            method: "POST",
+            body: passengerItem,
+            headers: { "Authorization": `Bearer ${user?.token}` }
+        }).then(res => {
+            setPassengerItem(prev => {
+                return {
+                    ...prev,
+                    ...res
+                };
+            });
+            console.log({ res });
+            setLoading(false);
+            navigate('instructions', { screen: 'Instruction', params: { passenger: res } });
+        }).catch(err => {
+            setLoading(false);
+            console.log({ err });
+        });
+    };
+
     return (
         <LayoutWithLogo>
             <LayoutBorder>
                 <Box flex={1} borderRadius={10} margin="m">
                     <Title {...{ title: 'Submit Passenger Info', icon: 'passenger' }} />
                     <KeyboardAvoidingView
-                        style={{
-                            flex: 1,
-                            backgroundColor: theme.colors.backgroundGrey,
-                            borderBottomRightRadius: 10,
-                            borderBottomLeftRadius: 10
-                        }}
+                        style={styles.container}
                         behavior={Platform.OS === "ios" ? "padding" : null}
                         keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 20}>
                         <Box flex={1} margin="m" justifyContent="center">
@@ -80,12 +109,54 @@ const PassengerInfo = () => {
                                     onChangeText: (text: string) => { updatePassengerInfo('passportNumber', text); },
                                     placeholder: 'Enter Passport Number',
                                 }} />
+                                <Box>
+                                    <DatePicker
+                                        style={{ height: 50, borderWidth: 1, margin: theme.spacing.m, borderRadius: 5, width: '90%', borderColor: theme.colors.blue }}
+                                        date={passengerItem?.dateOfBirth}
+                                        mode="date"
+                                        placeholder="Select Date Of Birth"
+                                        format="YYYY-MM-DD"
+                                        minDate="1970-01-01"
+                                        maxDate={moment().format('YYYY-MM-DD')}
+                                        confirmBtnText="Confirm"
+                                        cancelBtnText="Cancel"
+                                        customStyles={{
+                                            dateIcon: {
+                                                position: 'absolute',
+                                                right: 0,
+                                                top: 4,
+                                                marginLeft: 0
+                                            },
+                                            dateTouchBody: {
+                                                borderWidth: 0,
+                                            },
+                                            dateInput: {
+                                                marginLeft: 10,
+                                                alignItems: 'flex-start',
+                                                borderWidth: 0,
+                                            }
+                                            // ... You can check the source to find the other keys.
+                                        }}
+                                        onDateChange={(date) => { updatePassengerInfo('dateOfBirth', date); }}
+                                    />
+                                    <Box position='absolute' top={5} backgroundColor="white" left={22} paddingHorizontal="s">
+                                        <Text variant="xsmallPrimary">Date Of Birth</Text>
+                                    </Box>
+                                </Box>
+                                <TextInput {...{
+                                    label: 'Email Address',
+                                    value: passengerItem?.passengerEmail,
+                                    onChangeText: (text: string) => { updatePassengerInfo('passengerEmail', text); },
+                                    placeholder: 'Enter Email Address',
+                                }} />
                             </ScrollView>
                         </Box>
                         <Box flex={1} justifyContent="flex-end" marginVertical="m">
                             <Box marginHorizontal="m">
                                 <Button {...{
-                                    btnText: "Submit", onPress: () => { navigate('instructions'); }
+                                    loading,
+                                    btnText: "Submit",
+                                    onPress: () => { Submit(); }
                                 }} />
                             </Box>
                         </Box>

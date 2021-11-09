@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Box, makeStyles, Text } from 'components';
+import { Box, Icon, makeStyles, Text, useAppTheme } from 'components';
 import LayoutWithLogo from '@components/LayoutWithLogo';
 import LayoutBorder from '@components/LayoutBorder';
 import { Image, StyleSheet } from 'react-native';
 import Button from '@components/Button';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -64,7 +64,9 @@ const steps = [
 ];
 const Steps = () => {
     const styles = useStyles();
-    const { navigate } = useNavigation();
+    const { navigate, goBack } = useNavigation();
+    const theme = useAppTheme();
+    const { params: { passenger } } = useRoute();
     const [index, setIndex] = React.useState(0);
     return (
         <LayoutWithLogo>
@@ -79,8 +81,10 @@ const Steps = () => {
                         style={styles.shadow}
                         backgroundColor="white"
                         padding="m"
+                        flexDirection="row"
                         borderRadius={3}
-                        justifyContent="center">
+                        alignItems="center">
+                        <Icon name="arrow-left" style={{ paddingHorizontal: theme.spacing.s }} size={18} color={theme.colors.blue} onPress={() => { goBack() }} />
                         <Text variant="largePrimaryBold">How to Use Your Kit</Text>
                     </Box>
                     <Box flex={1}>
@@ -110,7 +114,7 @@ const Steps = () => {
                             }
                             {index === (steps.length - 1) &&
                                 <Box flex={1} paddingHorizontal="s">
-                                    <Button {...{ btnText: "Upload Documents", onPress: () => { navigate('upload-document'); } }} />
+                                    <Button {...{ btnText: "Upload Documents", onPress: () => { navigate('upload-document', { passenger }); } }} />
                                 </Box>
                             }
                         </Box>

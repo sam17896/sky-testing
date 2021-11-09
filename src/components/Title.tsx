@@ -46,7 +46,6 @@ const Title = ({ title, icon }) => {
             <Box flexDirection={'row'} alignItems="center">
                 {iconUri && <Image source={iconUri} style={{ width: 20, height: 20, marginHorizontal: theme.spacing.xs }} />}
                 <Text variant="largeWhiteBold">{title}</Text>
-
             </Box>
         </Box>
     )

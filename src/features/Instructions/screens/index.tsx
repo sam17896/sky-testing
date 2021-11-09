@@ -1,7 +1,7 @@
 import Button from '@components/Button';
 import LayoutBorder from '@components/LayoutBorder';
 import LayoutWithLogo from '@components/LayoutWithLogo';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { Icon, Text, useAppTheme } from 'components';
 import { Box, makeStyles } from 'components';
 import * as React from 'react';
@@ -40,6 +40,7 @@ const Instruction = () => {
     const theme = useAppTheme();
     const styles = useStyles();
     const ref = React.useRef();
+    const { params: { passenger } } = useRoute();
     const { navigate, goBack } = useNavigation();
     return (
         <LayoutWithLogo>
@@ -62,12 +63,13 @@ const Instruction = () => {
                     </Box>
                     <Box flex={1} >
                         <Video
-                            source={{ uri: "http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4" }}   // Can be a URL or a local file.
+                            source={require("@assets/big_buck_bunny.mp4")}   // Can be a URL or a local file.
                             ref={ref}
                             onBuffer={() => { }}                // Callback when remote video is buffering
                             style={{
                                 flex: 1,
-                            }}                                   // Store reference
+                            }}
+                            resizeMode="cover"                          // Store reference
                             onError={(e) => { console.log({ e }); }} />
                     </Box>
                     <Box padding="s" flex={2}>
@@ -107,7 +109,7 @@ const Instruction = () => {
                                 </Text>
                             </Box>
                         </Swiper>
-                        <Button {...{ btnText: "SEE STEPS", onPress: () => { navigate('Steps') } }} />
+                        <Button {...{ btnText: "SEE STEPS", onPress: () => { navigate('Steps', { passenger }) } }} />
                     </Box>
                 </Box>
             </LayoutBorder>

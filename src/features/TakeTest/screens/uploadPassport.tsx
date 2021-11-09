@@ -6,6 +6,10 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Button from '@components/Button';
 import { RNCamera } from 'react-native-camera';
 import RNFS from 'react-native-fs';
+import { useRoute } from '@react-navigation/core';
+import Endpoints from '@constant/Endpoint';
+import useRequest from '@hooks/useRequest';
+import useAuth from '@hooks/useAuth';
 const useStyles = makeStyles((theme) =>
     StyleSheet.create({
         shadow: {
@@ -26,8 +30,12 @@ const useStyles = makeStyles((theme) =>
 const UploadPassport = () => {
     const styles = useStyles();
     const theme = useAppTheme();
+    const { params: { passenger } } = useRoute();
     const [imageURI, setImageUri] = React.useState(null);
     const cameraRef = React.useRef();
+    const [loading, setLoading] = React.useState(false);
+    const request = useRequest();
+    const { user } = useAuth();
     const onButtonPress = React.useCallback(async (type, options) => {
         if (type === 'capture') {
             if (await requestCameraPermission()) {
@@ -73,12 +81,38 @@ const UploadPassport = () => {
     const takePicture = async () => {
         if (cameraRef && cameraRef.current) {
             // @ts-ignore
-            const { uri: pictureURI } = await cameraRef.current.takePictureAsync();
-            setImageUri(pictureURI);
-            const base64 = await getBase64(pictureURI);
-            console.log('base64: ', base64);
+            const image = await cameraRef.current.takePictureAsync();
+            console.log({ image });
+            setImageUri(image.uri);
+
         }
     };
+
+    const Submit = async () => {
+        setLoading(true);
+        const base64 = await getBase64(imageURI);
+        console.log('base64: ', base64);
+        request(Endpoints.UploadImage, {
+            method: "POST",
+            body: {
+                "documentTypeId": 1,
+                "orderId": passenger?.orderId,
+                "orderLineId": passenger?.orderLineId,
+                "passengerId": passenger?.id,
+                "image": base64,
+                "fileName": "passport.jpg",
+                "contentType": "image/jpg",
+                "dateResultTest": "2021-11-09T18:51:00.087Z"
+            },
+            headers: { "Authorization": `Bearer ${user?.token}` }
+        }).then(res => {
+            console.log({ res });
+            setLoading(false);
+        }).catch(err => {
+            setLoading(false);
+            console.log({ err });
+        });
+    }
     return (
         <Box flex={1}>
             <Box flex={4}>
@@ -115,7 +149,7 @@ const UploadPassport = () => {
                     </TouchableOpacity>
                 </Box>
                 <Box marginHorizontal="m">
-                    <Button {...{ btnText: "Submit", onPress: () => { } }} />
+                    <Button {...{ btnText: "Submit", loading, onPress: () => { Submit(); } }} />
                 </Box>
             </Box>
         </Box>

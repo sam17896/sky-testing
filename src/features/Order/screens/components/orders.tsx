@@ -79,6 +79,7 @@ const OrderList = ({ orders, loading, onPress }) => {
             style={styles.shadow}>
             {!loading && <FlatList
                 data={orders}
+                showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={_renderItem}
             />}

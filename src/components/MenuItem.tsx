@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) =>
         },
     }),
 );
-const MenuItem = ({ item }) => {
+const MenuItem = ({ item, onPress }) => {
     const { navigate } = useNavigation();
     const styles = useStyles();
     return (
@@ -40,7 +40,7 @@ const MenuItem = ({ item }) => {
                     <TouchableOpacity style={styles.button}
                         onPress={() => {
                             if (item.route) {
-                                navigate(item.route);
+                                onPress ? onPress(item.route) : navigate(item.route);
                             }
                         }}
                     >

@@ -32,13 +32,18 @@ const PassengerItem = ({ item }) => {
             style={styles.container}
         >
             <Box flex={1} flexDirection="row" justifyContent="space-between" paddingHorizontal="m" marginVertical="m">
-                <Box flexDirection={'row'} flex={3}>
-                    <Text paddingHorizontal="s" variant="smallPrimary" style={{ alignSelf: 'center' }}>{item?.passengerEmail}</Text>
+                <Box flex={3}>
+                    <Text paddingHorizontal="s" variant="smallPrimary" >{item?.passengerEmail}</Text>
+                    <Text paddingHorizontal="s" variant="xsmallPrimary" >{item?.passengerLocaterCode}</Text>
                 </Box>
                 <Box flex={1} alignItems="flex-end" justifyContent="center">
                     <TouchableOpacity style={styles.button}
                         onPress={() => {
-                            navigate('passenger-info', { item });
+                            if (item?.passengerStatus === 1) {
+                                navigate('passenger-info', { item });
+                            } else {
+                                navigate('upload-document', { item });
+                            }
                         }}
                     >
                         <Icon name="arrow-right" color={'white'} size={18} />

@@ -31,7 +31,7 @@ const useRequest = () => {
             const options = Object.assign({}, DEFAULTS, params);
             console.log({ options, url: `${CONFIG.server}${endpoint}` });
             return (
-                fetch(`${CONFIG.server}${endpoint}`, {
+                fetch(`${CONFIG.server}${endpoint}`.trim(), {
                     ...options,
                     headers: {
                         ...DEFAULTS.headers,
@@ -40,6 +40,7 @@ const useRequest = () => {
                     body: noStringyfy ? options.body : JSON.stringify(options.body),
                 })
                     .then(async (res) => {
+                        console.log({ res });
                         // res.text().then((res) => console.log(res));
                         // Handle success
                         if (res.status >= 200 && res.status < 400) {

@@ -7,18 +7,16 @@ const useGetPassengerInfo = ({ passengerId }) => {
     const request = useRequest();
     const { user } = useAuth();
     const [loading, setLoading] = React.useState(false);
-    const [passenger, setPassenger] = React.useState([]);
+    const [passenger, setPassenger] = React.useState();
 
     React.useEffect(() => {
         setLoading(true);
         console.log({ passengerId });
-        request(`${Endpoints.GetPassengerInfo}/${passengerId}`,
+        request("/User/GetPassengerDetail/187",
             { method: "GET", headers: { "Authorization": "Bearer " + user.token } })
             .then(res => {
                 console.log({ res });
-                if (res && res.length > 0) {
-                    setPassenger(res);
-                }
+                setPassenger(res);
                 setLoading(false);
             }).catch(err => {
                 console.log({ err });

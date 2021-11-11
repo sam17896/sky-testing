@@ -12,6 +12,7 @@ import PastOrderList from "@features/Results/PastOrdersList";
 import Results from "@features/Results";
 import UploadTestingKit from "@features/TakeTest/screens/uploadTestingKit";
 import UploadVideo from "@features/TakeTest/screens/uploadVideo";
+import PassengerDetail from "@features/TakeTest/screens/passengerDetail";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="result" component={Results} />
       <Stack.Screen name="take-test" component={TakeTest} />
       <Stack.Screen name="passenger-info" component={PassengerInfo} />
+      <Stack.Screen name="passenger-detail" component={PassengerDetail} />
       <Stack.Screen name="upload-document" component={UploadDocument} />
       <Stack.Screen name="upload-passport" component={UploadPassport} />
       <Stack.Screen name="upload-testing-kit" component={UploadTestingKit} />

@@ -67,7 +67,7 @@ const PassengerInfo = () => {
             });
             console.log({ res });
             setLoading(false);
-            navigate('instructions', { screen: 'Instruction', params: { passenger: res } });
+            navigate('passenger-detail', { passengerId: res?.id });
         }).catch(err => {
             setLoading(false);
             console.log({ err });
@@ -93,6 +93,7 @@ const PassengerInfo = () => {
                             <ScrollView style={{ flex: 1 }}>
                                 <TextInput {...{
                                     label: 'First Name',
+                                    labelBackground: 'backgroundGrey',
                                     value: passengerItem?.firstName,
                                     onChangeText: (text: string) => { updatePassengerInfo('firstName', text); },
                                     placeholder: 'Enter First Name',
@@ -100,12 +101,14 @@ const PassengerInfo = () => {
                                 <TextInput {...{
                                     label: 'Sur Name',
                                     value: passengerItem?.lastName,
+                                    labelBackground: 'backgroundGrey',
                                     onChangeText: (text: string) => { updatePassengerInfo('lastName', text); },
                                     placeholder: 'Enter Sur Name',
                                 }} />
                                 <TextInput {...{
                                     label: 'Passport Number',
                                     value: passengerItem?.passportNumber,
+                                    labelBackground: 'backgroundGrey',
                                     onChangeText: (text: string) => { updatePassengerInfo('passportNumber', text); },
                                     placeholder: 'Enter Passport Number',
                                 }} />
@@ -115,9 +118,9 @@ const PassengerInfo = () => {
                                         date={passengerItem?.dateOfBirth}
                                         mode="date"
                                         placeholder="Select Date Of Birth"
-                                        format="YYYY-MM-DD"
-                                        minDate="1970-01-01"
-                                        maxDate={moment().format('YYYY-MM-DD')}
+                                        format="DD-MM-YYYY"
+                                        minDate="01-01-1970"
+                                        maxDate={moment().format('DD-MM-YYYY')}
                                         confirmBtnText="Confirm"
                                         cancelBtnText="Cancel"
                                         customStyles={{
@@ -139,12 +142,13 @@ const PassengerInfo = () => {
                                         }}
                                         onDateChange={(date) => { updatePassengerInfo('dateOfBirth', date); }}
                                     />
-                                    <Box position='absolute' top={5} backgroundColor="white" left={22} paddingHorizontal="s">
+                                    <Box position='absolute' top={5} backgroundColor="backgroundGrey" left={22} paddingHorizontal="s">
                                         <Text variant="xsmallPrimary">Date Of Birth</Text>
                                     </Box>
                                 </Box>
                                 <TextInput {...{
                                     label: 'Email Address',
+                                    labelBackground: 'backgroundGrey',
                                     value: passengerItem?.passengerEmail,
                                     onChangeText: (text: string) => { updatePassengerInfo('passengerEmail', text); },
                                     placeholder: 'Enter Email Address',

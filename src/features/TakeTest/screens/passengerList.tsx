@@ -9,23 +9,6 @@ import * as React from 'react';
 import { FlatList } from 'react-native';
 import PassengerItem from './components/passengerItem';
 
-const actions = [
-    {
-        image: require('@assets/upload-passport.png'),
-        label: 'Upload Passport',
-        route: 'upload-passport'
-    },
-    {
-        image: require('@assets/upload-test-result.png'),
-        label: 'Upload Test Result',
-        route: ''
-    }, {
-        image: require('@assets/upload-video.png'),
-        label: 'Upload Video',
-        route: ''
-    }
-];
-
 const PassengerList = () => {
     const { params } = useRoute();
     const [loading, passengers] = usePassengerInfo({ orderId: params?.orderId, orderLineId: params?.orderLineId });

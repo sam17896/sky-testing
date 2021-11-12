@@ -11,7 +11,7 @@ interface RequestInitExtended extends RequestInit {
 }
 
 const CONFIG = {
-    server: `${Config.API_URL}`,
+    server: Config.API_URL,
 };
 
 const DEFAULTS = {
@@ -29,9 +29,9 @@ const useRequest = () => {
             noStringyfy = false,
         ) => {
             const options = Object.assign({}, DEFAULTS, params);
-            console.log({ options, url: `${CONFIG.server}${endpoint}` });
+            console.log({ options, url: CONFIG.server + endpoint });
             return (
-                fetch(`${CONFIG.server}${endpoint}`.trim(), {
+                fetch((CONFIG.server + endpoint).replace("​", "").replace("​", "").replace("​", ""), {
                     ...options,
                     headers: {
                         ...DEFAULTS.headers,

@@ -12,7 +12,7 @@ const useGetPassengerInfo = ({ passengerId }) => {
     React.useEffect(() => {
         setLoading(true);
         console.log({ passengerId });
-        request(`${Endpoints.GetPassengerInfo.trim()}/${passengerId.trim()}`.trim(),
+        request("​/User​/GetPassengerDetail/" + passengerId,
             { method: "GET", headers: { "Authorization": "Bearer " + user?.token } })
             .then(res => {
                 console.log({ res });

@@ -13,7 +13,6 @@ const PastOrderList = () => {
             <LayoutBorder>
                 <Box flex={1} marginVertical="l">
                     <PastOrders {...{ orders: pastOrders, loading }} />
-                    <Box flex={0.5} />
                 </Box>
             </LayoutBorder>
         </LayoutWithLogo>

@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) =>
         },
         button: {
             borderRadius: 10,
-            width: 50,
-            height: 30,
+            width: 100,
+            height: 40,
+            padding: 3,
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: theme.colors.blue,
@@ -57,11 +58,11 @@ const OrderList = ({ orders, loading, onPress }) => {
                         <Box flex={1} justifyContent="center">
                             <Text variant="xxsmallPrimary">Quantity: {item?.quantity}</Text>
                         </Box>
-                        <Box flex={1} alignItems="flex-end" justifyContent="center">
+                        <Box flex={1} alignItems="flex-end" justifyContent="center" marginTop="s">
                             <TouchableOpacity style={styles.button} onPress={() => {
                                 onPress(item);
                             }}>
-                                <Text variant="xxsmallWhiteRegular">View</Text>
+                                <Text variant="xsmallWhiteRegular" textAlign="center">View Order & Activate</Text>
                             </TouchableOpacity>
                         </Box>
                     </Box>

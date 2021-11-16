@@ -35,6 +35,7 @@ const PassengerItem = ({ item }) => {
                 <Box flex={3}>
                     <Text paddingHorizontal="s" variant="smallPrimary" >{item?.passengerEmail}</Text>
                     <Text paddingHorizontal="s" variant="xsmallPrimary" >{item?.passengerLocaterCode}</Text>
+                    <Text paddingHorizontal="s" variant="xsmallPrimary" >{item?.passengerStatus === 1 ? 'Add Passenger Info' : 'Activate & Take Test'}</Text>
                 </Box>
                 <Box flex={1} alignItems="flex-end" justifyContent="center">
                     <TouchableOpacity style={styles.button}
@@ -51,7 +52,7 @@ const PassengerItem = ({ item }) => {
                 </Box>
             </Box>
         </Box>
-    )
-}
+    );
+};
 
 export default PassengerItem;

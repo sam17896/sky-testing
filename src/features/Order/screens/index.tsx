@@ -13,7 +13,6 @@ const Order = () => {
             <LayoutBorder>
                 <Box flex={1} marginVertical="l">
                     <LiveOrders {...{ orders: liveOrders, loading }} />
-                    <Box flex={0.5} />
                 </Box>
             </LayoutBorder>
         </LayoutWithLogo>

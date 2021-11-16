@@ -40,7 +40,7 @@ const Instruction = () => {
     const theme = useAppTheme();
     const styles = useStyles();
     const ref = React.useRef();
-    const { params: { passenger } } = useRoute();
+    const { params } = useRoute();
     const { navigate, goBack } = useNavigation();
     return (
         <LayoutWithLogo>
@@ -109,7 +109,7 @@ const Instruction = () => {
                                 </Text>
                             </Box>
                         </Swiper>
-                        <Button {...{ btnText: "SEE STEPS", onPress: () => { navigate('Steps', { passenger }) } }} />
+                        <Button {...{ btnText: "SEE STEPS", onPress: () => { navigate('Steps', { passenger: params?.passenger }) } }} />
                     </Box>
                 </Box>
             </LayoutBorder>

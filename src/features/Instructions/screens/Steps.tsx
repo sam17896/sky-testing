@@ -66,7 +66,7 @@ const Steps = () => {
     const styles = useStyles();
     const { navigate, goBack } = useNavigation();
     const theme = useAppTheme();
-    const { params: { passenger } } = useRoute();
+    const { params } = useRoute();
     const [index, setIndex] = React.useState(0);
     return (
         <LayoutWithLogo>
@@ -114,7 +114,7 @@ const Steps = () => {
                             }
                             {index === (steps.length - 1) &&
                                 <Box flex={1} paddingHorizontal="s">
-                                    <Button {...{ btnText: "Upload Documents", onPress: () => { navigate('upload-document', { passenger }); } }} />
+                                    <Button {...{ btnText: "Upload Documents", onPress: () => { navigate('upload-document', { passenger: params?.passenger }); } }} />
                                 </Box>
                             }
                         </Box>

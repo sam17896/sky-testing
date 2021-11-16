@@ -1,9 +1,9 @@
-import Endpoints from "@constant/Endpoint";
-import useAuth from "@hooks/useAuth";
-import useRequest from "@hooks/useRequest";
-import React, { useState } from "react";
-import Snackbar from "react-native-snackbar";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Endpoints from '@constant/Endpoint';
+import useAuth from '@hooks/useAuth';
+import useRequest from '@hooks/useRequest';
+import React, { useState } from 'react';
+import Snackbar from 'react-native-snackbar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const useSignIn = (): [
     email: string,
     setEmail: React.Dispatch<React.SetStateAction<string>>,
@@ -13,8 +13,8 @@ const useSignIn = (): [
     loading: boolean,
 ] => {
     const request = useRequest();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const { setLoggedUser } = useAuth();
 
@@ -23,7 +23,6 @@ const useSignIn = (): [
             if (err) {
                 console.log({ err });
             }
-
             if (res) {
                 const credentials = JSON.parse(res);
                 setEmail(credentials?.email);
@@ -31,26 +30,26 @@ const useSignIn = (): [
             }
         });
         return () => {
-            setEmail("");
-            setPassword("");
+            setEmail('');
+            setPassword('');
             setLoading(false);
         };
     }, []);
 
     const Login = async () => {
         setLoading(true);
-        if (email && email === "") {
+        if (email && email === '') {
             Snackbar.show({
-                text: "Email is required",
+                text: 'Email is required',
                 duration: Snackbar.LENGTH_LONG,
             });
             setLoading(false);
             return;
         }
 
-        if (password && password === "") {
+        if (password && password === '') {
             Snackbar.show({
-                text: "Password is required",
+                text: 'Password is required',
                 duration: Snackbar.LENGTH_LONG,
             });
             setLoading(false);
@@ -59,19 +58,19 @@ const useSignIn = (): [
 
         try {
             const res = await request(Endpoints.Login, {
-                method: "POST",
+                method: 'POST',
+                // @ts-ignore
                 body: { email, password },
             });
-
             console.log({ res });
             if (res) {
                 const obj = {
                     token: res.token,
-                    "userId": res.userId,
+                    userId: res.userId,
                     email,
-                    "isFaulted": res.isFaulted,
-                    "isEnabled": res.isEnabled,
-                    "sessionExpiration": res.sessionExpiration,
+                    isFaulted: res.isFaulted,
+                    isEnabled: res.isEnabled,
+                    sessionExpiration: res.sessionExpiration,
                 };
                 AsyncStorage.setItem('@credentials', JSON.stringify({ email, password }));
                 setLoading(false);
@@ -79,11 +78,17 @@ const useSignIn = (): [
             }
         } catch (err) {
             setLoading(false);
-            Snackbar.show({
-                text: JSON.stringify(err),
-                duration: Snackbar.LENGTH_LONG,
-            });
-            console.log({ err });
+            if (err) {
+                const error = JSON.parse(err);
+                console.log({ error });
+                if (error.status === 401) {
+                    Snackbar.show({
+                        text: 'Unautorized: Invalid Credentials',
+                        duration: Snackbar.LENGTH_LONG,
+                    });
+                }
+            }
+
         }
     };
     return [email, setEmail, password, setPassword, Login, loading];

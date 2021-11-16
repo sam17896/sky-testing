@@ -68,11 +68,13 @@ const useRequest = () => {
                                             text: error.errors.message,
                                             duration: Snackbar.LENGTH_LONG,
                                         });
+                                        throw error?.errors?.messsage;
                                     } else {
                                         Snackbar.show({
                                             text: error.message,
                                             duration: Snackbar.LENGTH_LONG,
                                         });
+                                        throw error?.messsage;
                                     }
                                 })
                                 .catch((e) => {
@@ -81,6 +83,7 @@ const useRequest = () => {
                                         duration: Snackbar.LENGTH_LONG,
                                     });
                                     console.log("useReq error code:", res.status, "error: ", e);
+                                    throw "Some Error Occurred";
                                 });
                         }
 
@@ -88,16 +91,19 @@ const useRequest = () => {
                         try {
                             return res.text().then((error) => {
                                 console.log("useReq: ", error);
+                                throw error;
                             });
                         } catch (e) {
                             // If nothing worked, we'll return the status code (e.g. 403)
                             console.log("useReq error code:", res.status, "error: ", e);
+                            throw e;
                         }
                     })
                     // This happens when we are offline
                     .catch((e) => {
                         console.log({ e });
                         console.log("useReq Offline: ", JSON.stringify(e));
+                        throw e;
                     })
             );
         },

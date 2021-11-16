@@ -1,7 +1,7 @@
 import Button from '@components/Button';
 import { Box, Text } from 'components';
 import * as React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Linking, TouchableOpacity } from 'react-native';
 
 const Action = ({ Login, loading }: {
     Login: () => Promise<void>,
@@ -13,7 +13,7 @@ const Action = ({ Login, loading }: {
                 <Button {...{ btnText: "SIGN IN", loading, onPress: () => Login() }} />
             </Box>
             <Box marginVertical="xxs">
-                <Button {...{ btnText: "PURCHASE TESTING KIT", onPress: () => { } }} />
+                <Button {...{ btnText: "PURCHASE TESTING KIT", onPress: () => { Linking.openURL('https://skywaytesting.com/'); } }} />
             </Box>
             <Box flex={1} flexDirection="row" justifyContent="space-between" margin="s">
                 <TouchableOpacity>
